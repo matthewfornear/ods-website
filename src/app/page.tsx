@@ -1,103 +1,66 @@
-import Image from "next/image";
+"use client";
+
+// src/app/page.tsx
+
+import { useEffect } from "react";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+  useEffect(() => {
+    const el = document.querySelector(".glitch-target");
+    if (el) {
+      setTimeout(() => {
+        el.classList.add("glitch-noise");
+      }, 700); // Delay until fade-in completes
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
+      const handleHover = () => {
+        el.classList.remove("glitch-noise");
+        void el.offsetWidth; // force reflow
+        el.classList.add("glitch-noise");
+      };
+
+      el.addEventListener("mouseenter", handleHover);
+
+      const handleFocus = () => {
+        el.classList.remove("glitch-noise");
+        void el.offsetWidth; // force reflow
+        el.classList.add("glitch-noise");
+      };
+
+      window.addEventListener("focus", handleFocus);
+
+      return () => {
+        el.removeEventListener("mouseenter", handleHover);
+        window.removeEventListener("focus", handleFocus);
+      };
+    }
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-black text-white font-sans">
+      <main className="pt-40 px-8 max-w-3xl mx-auto text-center space-y-6 animate-fade-in">
+        <h1 className="text-6xl font-extrabold tracking-tight leading-tight whitespace-nowrap">
+          <span className="structured-data">Data</span> without
+          <span className="glitch-target inline-block ml-2">noise</span>.
+        </h1>
+        <p className="text-xl text-gray-400">
+          OmniData Solutions turns unstructured business data into actionable insight.
+        </p>
+        <div className="h-px w-24 mx-auto bg-gray-700 my-12" />
+        <div className="flex justify-center gap-4">
           <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/contact"
+            className="inline-block text-sm px-6 py-3 rounded border border-white/20 hover:bg-white hover:text-black transition"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
+            Let's talk
           </a>
           <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="/about"
+            className="inline-block text-sm px-6 py-3 rounded border border-white/20 hover:bg-white hover:text-black transition"
           >
-            Read our docs
+            Learn more
           </a>
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
   );
 }

@@ -24,3 +24,80 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+@keyframes glitchStrong {
+  0% {
+    text-shadow: 2px 0 red, -2px 0 cyan;
+    opacity: 0.8;
+  }
+  20% {
+    text-shadow: -3px 0 red, 3px 0 cyan;
+  }
+  40% {
+    text-shadow: 3px 0 magenta, -3px 0 lime;
+  }
+  60% {
+    text-shadow: -2px 0 cyan, 2px 0 red;
+  }
+  80% {
+    text-shadow: 1px 0 red, -1px 0 cyan;
+  }
+  100% {
+    text-shadow: none;
+    opacity: 1;
+  }
+}
+
+.glitch-noise {
+  animation: glitchStrong 1s ease-out 1;
+  display: inline-block;
+}
+
+@keyframes tightenFade {
+  0% {
+    opacity: 0;
+    letter-spacing: 0.2em;
+  }
+  100% {
+    opacity: 1;
+    letter-spacing: 0em;
+  }
+}
+
+.animate-tighten {
+  animation: tightenFade 0.7s ease-out both;
+  display: inline-block;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fade-in 1s ease-out both;
+}
+
+.structured-data {
+  display: inline-flex;
+  gap: 0.05em;
+}
+
+.structured-data span {
+  display: inline-block;
+  opacity: 0;
+  transform: translateY(0.5em);
+  animation: slide-in 0.4s forwards;
+}
+
+.structured-data span:nth-child(1) { animation-delay: 0.05s; }
+.structured-data span:nth-child(2) { animation-delay: 0.1s; }
+.structured-data span:nth-child(3) { animation-delay: 0.15s; }
+.structured-data span:nth-child(4) { animation-delay: 0.2s; }
+
+@keyframes slide-in {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
