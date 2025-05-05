@@ -4,6 +4,9 @@ import ThemeProvider from "./ThemeProvider";
 export const metadata = {
   title: "OmniData Solutions",
   description: "Web-scale business data automation",
+  icons: {
+    icon: '/svg/favicon.svg',
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
