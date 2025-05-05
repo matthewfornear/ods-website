@@ -43,6 +43,27 @@ export default function Home() {
   // Modal state
   const [modalOpen, setModalOpen] = useState(false);
 
+  // --- Node Graph Rotation State ---
+  const [rotation, setRotation] = useState(0);
+  const requestRef = useRef<number | null>(null);
+  useEffect(() => {
+    let lastTime = performance.now();
+    const animate = (now: number) => {
+      const delta = now - lastTime;
+      lastTime = now;
+      // 360deg every 180s: 360/180 = 2 deg/s (barely perceptible)
+      setRotation(r => (r + (delta * 360) / (180 * 1000)) % 360);
+      requestRef.current = requestAnimationFrame(animate);
+    };
+    requestRef.current = requestAnimationFrame(animate);
+    return () => {
+      if (requestRef.current) cancelAnimationFrame(requestRef.current);
+    };
+  }, []);
+
+  // Node graph hover state
+  const [hovered, setHovered] = useState(-1);
+
   return (
     <div className="relative min-h-screen flex flex-col bg-black text-white font-sans">
       {/* Hero Spotlight Background */}
@@ -50,17 +71,7 @@ export default function Home() {
       {/* Navbar */}
       <nav className="navbar">
         <a href="/" className="navbar-logo" aria-label="OmniData Solutions Home">
-          <span className="logo-eye">
-            {/* Placeholder SVG for eye with node tree pupil */}
-            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
-              <ellipse cx="16" cy="16" rx="13" ry="8" stroke="#fff" strokeWidth="2"/>
-              <circle cx="16" cy="16" r="3.5" stroke="#7c8aff" strokeWidth="2" fill="none"/>
-              <circle cx="16" cy="16" r="1.2" fill="#7c8aff"/>
-              <line x1="16" y1="16" x2="19" y2="13" stroke="#7c8aff" strokeWidth="1.2"/>
-              <line x1="16" y1="16" x2="13" y2="13" stroke="#7c8aff" strokeWidth="1.2"/>
-              <line x1="16" y1="16" x2="16" y2="11" stroke="#7c8aff" strokeWidth="1.2"/>
-            </svg>
-          </span>
+          <img src="/svg/logo.svg" alt="OmniData Solutions logo" className="logo-img" style={{height: '2.1em', width: '2.1em'}} />
           <span className="logo-text">OmniData Solutions</span>
         </a>
         <div className="navbar-links">
@@ -69,117 +80,32 @@ export default function Home() {
           <a href="#contact" className="navbar-link" aria-label="Contact">Contact</a>
         </div>
       </nav>
-      <main className="main-container relative z-10 pt-40 text-center space-y-8 animate-fade-in flex-grow">
-        <h1 className="text-6xl font-extrabold tracking-tight leading-tight whitespace-nowrap transition-transform duration-200 hover:scale-105 focus:scale-105" tabIndex={0}>
+      <main className="main-container relative z-10 pt-40 text-center space-y-8 fade-up flex-grow">
+        <h1 className="main-title transition-transform duration-200 hover:scale-105 focus:scale-105" tabIndex={0}>
           <span className="structured-data">Data</span> without
           <span className="glitch-target inline-block ml-2">noise</span>.
         </h1>
-        <div className="hero-tagline">The modern platform for business data automation</div>
+        <div className="hero-tagline subtitle">The modern platform for business data automation</div>
         <div className="text-lg text-slate-300 font-medium max-w-xl mx-auto animate-tighten">
           Unlock the power of unified, actionable insights for your business.
         </div>
-        <div className="integration-graph" style={{marginBottom: '9rem', marginTop: '3.5rem'}}>
-          <svg width="570" height="400" viewBox="0 0 570 400" fill="none">
-            {/* Node graph with equal spacing and lines ending at node edges */}
-            {(() => {
-              // Node data
-              const center = { x: 285, y: 180, r: 48 };
-              const nodes = [
-                { name: 'Google Maps', icon: '/svg/googlemaps.svg', stats: '200M+ places', color: '#7c8aff', fill: '#fff', text: '#bfcfff', stat: '#7c8aff', integrated: true },
-                { name: 'X.com', icon: '/svg/xdotcom.svg', stats: '500M+ posts', color: '#7c8aff', fill: '#fff', text: '#bfcfff', stat: '#7c8aff', integrated: true },
-                { name: 'Amazon', icon: '/svg/amazon.svg', stats: '1M+ products', color: '#bbb', fill: '#bbb', text: '#bfcfff', stat: '#bbb', integrated: false },
-                { name: 'Shopify', icon: '/svg/shopify.svg', stats: '2M+ shops', color: '#bbb', fill: '#bbb', text: '#bfcfff', stat: '#bbb', integrated: false },
-                { name: 'Indeed', icon: '/svg/indeed.svg', stats: '10M+ jobs', color: '#bbb', fill: '#bbb', text: '#bfcfff', stat: '#bbb', integrated: false },
-              ];
-              const nodeR = 30;
-              const nodeRDashed = 29;
-              const nodeRFill = 25;
-              const n = nodes.length;
-              const radius = 140;
-              // Calculate node positions
-              const nodeAngles = nodes.map((_, i) => (2 * Math.PI * i) / n - Math.PI / 2);
-              const nodePositions = nodeAngles.map(a => ({
-                x: center.x + radius * Math.cos(a),
-                y: center.y + radius * Math.sin(a),
-                angle: a
-              }));
-              // Draw lines first
-              const lines = nodePositions.map((pos, i) => {
-                // Line from edge of center node to edge of node
-                const dx = pos.x - center.x;
-                const dy = pos.y - center.y;
-                const dist = Math.sqrt(dx*dx + dy*dy);
-                const startX = center.x + (center.r * dx) / dist;
-                const startY = center.y + (center.r * dy) / dist;
-                const endX = pos.x - (nodeR * dx) / dist;
-                const endY = pos.y - (nodeR * dy) / dist;
-                const isIntegrated = nodes[i].integrated;
-                return (
-                  <line
-                    key={`line-${i}`}
-                    x1={startX}
-                    y1={startY}
-                    x2={endX}
-                    y2={endY}
-                    stroke={isIntegrated ? '#7c8aff' : '#bbb'}
-                    strokeWidth={isIntegrated ? 3 : 2.5}
-                    strokeDasharray={isIntegrated ? undefined : '8 8'}
-                    opacity={isIntegrated ? 1 : 0.6}
-                  />
-                );
-              });
-              // Draw nodes
-              const nodeCircles = nodePositions.map((pos, i) => {
-                const n = nodes[i];
-                return (
-                  <g key={`node-${i}`}>
-                    {/* Dashed circle for coming soon */}
-                    {!n.integrated && (
-                      <circle cx={pos.x} cy={pos.y} r={nodeRDashed} fill="none" stroke="#bbb" strokeWidth="2" strokeDasharray="6 6" opacity="0.6" />
-                    )}
-                    {/* Node circle */}
-                    <circle cx={pos.x} cy={pos.y} r={nodeR} fill={n.fill} stroke={n.color} strokeWidth="3" opacity={n.integrated ? 1 : 0.25} />
-                    {/* Icon */}
-                    <image href={n.icon} x={pos.x - 18} y={pos.y - 18} width="36" height="36" opacity={n.integrated ? 1 : 0.25} />
-                    {/* Name */}
-                    <text x={pos.x} y={pos.y + nodeR + 22} textAnchor="middle" fill={n.text} fontSize="15" fontWeight="bold" opacity={n.integrated ? 1 : 0.7}>{n.name}</text>
-                    {/* Stats */}
-                    <text x={pos.x} y={pos.y + nodeR + 40} textAnchor="middle" fill={n.stat} fontSize="13" opacity={n.integrated ? 1 : 0.7}>{n.stats}</text>
-                  </g>
-                );
-              });
-              // Draw center node and label
-              return [
-                ...lines,
-                ...nodeCircles,
-                <g key="center">
-                  <circle cx={center.x} cy={center.y} r={center.r} fill="#fff" stroke="#7c8aff" strokeWidth="3"/>
-                  <image href="/svg/logo.svg" x={center.x - 30} y={center.y - 30} width="60" height="60" />
-                  <text x={center.x} y={center.y + center.r + 40} textAnchor="middle" fill="#e0e7ff" fontSize="18" fontWeight="bold">OmniData</text>
-                </g>
-              ];
-            })()}
-          </svg>
+        <div className="platforms-grid">
+          {platforms.map((p, i) => (
+            <div className="platform-card" key={p.name} aria-label={p.name}>
+              <img src={p.icon} alt={p.name + ' logo'} className="platform-icon" />
+              <div className="platform-name">{p.name}</div>
+              <div className="platform-stats">{p.stats}</div>
+              {!p.integrated && <div className="platform-badge">Coming Soon</div>}
+            </div>
+          ))}
+        </div>
+        <div className="cta-below-graph" style={{marginTop: '2.5rem'}}>
+          <a href="/contact" className="button-primary">Get a Demo</a>
+          <a href="/about" className="button-secondary">View Capabilities</a>
+          <a href="/about" className="button-secondary">Learn more</a>
         </div>
         <div className="text-base text-slate-200 leading-snug max-w-xl mx-auto" style={{marginTop: '2.5rem'}}>
           Bringing all your data together into one unified searchable system tailored to your business.
-        </div>
-        {/* CTA Buttons */}
-        <div className="flex justify-center gap-4">
-          <button
-            className="button-primary"
-            onClick={() => setModalOpen(true)}
-            aria-label="Open contact form"
-          >
-            Let's talk
-          </button>
-          <a
-            href="/about"
-            className="button-secondary"
-            aria-label="Learn more about us"
-          >
-            Learn more
-          </a>
         </div>
       </main>
       <footer className="footer">
