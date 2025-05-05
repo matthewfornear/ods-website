@@ -1,21 +1,29 @@
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
 import "./globals.css";
-import ThemeProvider from "./ThemeProvider";
+import { CartProvider } from "./context/CartContext";
 
-export const metadata = {
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
   title: "OmniData Solutions",
-  description: "Web-scale business data automation",
+  description: "Transform your business data into actionable insights",
   icons: {
     icon: '/svg/favicon.svg',
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
     <html lang="en">
-      <body className="min-h-screen font-sans">
-        <ThemeProvider>
+      <body className={inter.className}>
+        <CartProvider>
           {children}
-        </ThemeProvider>
+        </CartProvider>
       </body>
     </html>
   );
