@@ -9,6 +9,7 @@ import Footer from "../components/Footer";
 export default function Cart() {
   const { cartItems, removeFromCart } = useCart();
   const [isCheckingOut, setIsCheckingOut] = useState(false);
+  const [agreedToEua, setAgreedToEua] = useState(false);
 
   const handleCheckout = async () => {
     setIsCheckingOut(true);
@@ -73,16 +74,28 @@ export default function Cart() {
                   <span>Total</span>
                   <span className="text-white font-semibold">${total.toFixed(2)}</span>
                 </div>
+                <div className="flex items-center space-x-2 mt-4">
+                  <input
+                    type="checkbox"
+                    id="eua-checkbox"
+                    checked={agreedToEua}
+                    onChange={(e) => setAgreedToEua(e.target.checked)}
+                    className="w-4 h-4 rounded border-gray-600 bg-gray-700 text-blue-500 focus:ring-blue-500"
+                  />
+                  <label htmlFor="eua-checkbox" className="text-sm text-gray-400">
+                    I agree to the <Link href="/eua" className="text-blue-400 hover:text-blue-300 underline">End User Agreement</Link>
+                  </label>
+                </div>
                 <a
                   href="https://buy.stripe.com/dR6aGU2Df5t6e0U5kk"
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`w-full inline-block font-medium py-3 px-6 rounded-lg text-center text-xl shadow-lg mb-4 mt-6 transition-all duration-300
-                    ${cartItems.length === 0
+                    ${cartItems.length === 0 || !agreedToEua
                       ? 'bg-gray-700 text-gray-400 cursor-not-allowed pointer-events-none'
                       : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700'}`}
-                  tabIndex={cartItems.length === 0 ? -1 : 0}
-                  aria-disabled={cartItems.length === 0}
+                  tabIndex={cartItems.length === 0 || !agreedToEua ? -1 : 0}
+                  aria-disabled={cartItems.length === 0 || !agreedToEua}
                 >
                   Checkout with Stripe
                 </a>
