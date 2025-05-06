@@ -56,7 +56,7 @@ export default function About() {
       <main className="flex-grow pt-20 px-4 max-w-6xl mx-auto w-full">
         {/* Hero Section */}
         <section className="text-center mb-20 animate-on-scroll opacity-0">
-          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-6 text-white">
             About OmniData Solutions
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -77,6 +77,86 @@ export default function About() {
           </div>
         </section>
 
+        {/* Real-World Applications Section */}
+        <section className="mb-20 animate-on-scroll opacity-0">
+          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8">
+            <h2 className="text-3xl font-bold mb-8 text-center text-white">Real-World Applications</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="bg-gray-800/50 rounded-xl p-6">
+                <h3 className="text-xl font-bold mb-4 text-white">Catering & Food Services</h3>
+                <ul className="space-y-3 text-gray-300">
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We analyze Google Maps data to identify neighborhoods with high population density but low catering service presence, providing you with exact locations for expansion
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We compare your menu prices against 1,000+ local competitors, automatically adjusting your rates to maintain optimal profit margins while staying competitive
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We track customer reviews across platforms to identify peak service hours, automatically suggesting schedule adjustments to maximize customer satisfaction
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-800/50 rounded-xl p-6">
+                <h3 className="text-xl font-bold mb-4 text-white">Retail & E-commerce</h3>
+                <ul className="space-y-3 text-gray-300">
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We monitor competitor inventory levels in real-time, alerting you when stock runs low so you can adjust your pricing strategy
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We analyze Amazon sales data to identify trending products 48 hours before they hit mainstream, giving you first-mover advantage
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We track customer search patterns to automatically optimize your product listings and marketing keywords for maximum visibility
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-800/50 rounded-xl p-6">
+                <h3 className="text-xl font-bold mb-4 text-white">Professional Services</h3>
+                <ul className="space-y-3 text-gray-300">
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We analyze review patterns to automatically adjust your service hours, extending availability during high-demand periods and reducing staff during slow times
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We track competitor service offerings and pricing in real-time, automatically suggesting service package adjustments to maintain market competitiveness
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We monitor client feedback across platforms to identify service gaps, automatically generating improvement recommendations for your team
+                  </li>
+                </ul>
+              </div>
+
+              <div className="bg-gray-800/50 rounded-xl p-6">
+                <h3 className="text-xl font-bold mb-4 text-white">Healthcare & Wellness</h3>
+                <ul className="space-y-3 text-gray-300">
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We analyze patient feedback across platforms to automatically adjust appointment scheduling, reducing wait times during peak hours
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We identify underserved areas by analyzing population density against healthcare provider locations, providing exact coordinates for new facility placement
+                  </li>
+                  <li className="flex items-start">
+                    <span className="text-white mr-2">•</span>
+                    We track competitor service offerings and pricing, automatically suggesting service adjustments to maintain optimal patient satisfaction and revenue
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Values Section */}
         <section className="mb-20 animate-on-scroll opacity-0">
           <h2 className="text-3xl font-bold mb-12 text-center">Our Values</h2>
@@ -84,7 +164,7 @@ export default function About() {
             {values.map((value) => (
               <div 
                 key={value.title}
-                className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300"
+                className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-xl p-6 hover:transform hover:scale-105 transition-all duration-300 text-center"
               >
                 <div className="text-4xl mb-4">{value.icon}</div>
                 <h3 className="text-xl font-bold mb-2">{value.title}</h3>
