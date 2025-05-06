@@ -1,36 +1,81 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Omnidata Solutions LLC – Website
+This is the official website for Omnidata Solutions LLC, built with Next.js and styled using Tailwind CSS. It serves as the central hub for showcasing services, accepting Stripe payments, and offering a clean, consistent user experience across web and mobile.
 
-## Getting Started
+Features
+⚙️ Built with Next.js App Router
 
-First, run the development server:
+💳 Integrated Stripe Checkout for product and service sales
 
-```bash
+🛒 Custom cart functionality with real-time counter
+
+🎨 Unified design using Tailwind CSS
+
+🧩 Modular structure for future expansion
+
+📱 Fully responsive across devices
+
+Pages
+/ – Landing Page
+
+/services – Overview of offered services
+
+/cart – View and manage cart
+
+/checkout – Stripe-powered payment processing
+
+/watch – Demo or walkthrough video page
+
+Getting Started (Development)
+Install dependencies:
+
+bash
+Copy
+Edit
+npm install
+Start local dev server:
+
+bash
+Copy
+Edit
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Then open http://localhost:3000 in your browser.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+File Structure Overview
+app/page.tsx – Home page content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+app/layout.tsx – Global layout (Header/Footer)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+components/ – Reusable UI components
 
-## Learn More
+lib/ – Stripe integration and utility functions
 
-To learn more about Next.js, take a look at the following resources:
+public/ – Static assets
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+styles/ – Tailwind configuration and global styles
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Deployment
+This site is designed to deploy seamlessly on Vercel.
 
-## Deploy on Vercel
+To deploy:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Push your changes to GitHub.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Connect the repo to your Vercel dashboard.
+
+Set environment variables if needed (e.g., Stripe keys).
+
+Vercel will handle the rest.
+
+Technologies Used
+Next.js
+
+React
+
+Tailwind CSS
+
+Stripe
+
+TypeScript
+
+License
+This project is proprietary and maintained by Omnidata Solutions LLC. For partnership or usage inquiries, contact: contact@omnidata-solutions.com
