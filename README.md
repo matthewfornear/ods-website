@@ -1,5 +1,11 @@
 # 🧠 Omnidata Solutions LLC – Official Website
 
+> **NOTICE**  
+> This software and all associated assets are **proprietary** to **Omnidata Solutions LLC**.  
+> **No license is granted**, express or implied. Redistribution, modification, or reuse of any part of this codebase is strictly prohibited.
+
+---
+
 Welcome to the official web presence of **Omnidata Solutions LLC**, a data aggregation and analytics company. This site is built using **Next.js** and **Tailwind CSS**, with full **Stripe integration**. It's designed to be fast, elegant, and scalable.
 
 ---
