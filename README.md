@@ -1,81 +1,35 @@
-Omnidata Solutions LLC – Website
-This is the official website for Omnidata Solutions LLC, built with Next.js and styled using Tailwind CSS. It serves as the central hub for showcasing services, accepting Stripe payments, and offering a clean, consistent user experience across web and mobile.
+# 🧠 Omnidata Solutions LLC – Official Website
 
-Features
-⚙️ Built with Next.js App Router
+Welcome to the official web presence of **Omnidata Solutions LLC**, a data aggregation and analytics company. This site is built using **Next.js** and **Tailwind CSS**, with full **Stripe integration**. It's designed to be fast, elegant, and scalable.
 
-💳 Integrated Stripe Checkout for product and service sales
+---
 
-🛒 Custom cart functionality with real-time counter
+## 🚀 Features
 
-🎨 Unified design using Tailwind CSS
+- ⚡️ **Next.js App Router** – Modern routing & optimized performance
+- 💳 **Stripe Integration** – Secure, production-ready checkout flow
+- 🛒 **Dynamic Cart System** – Realtime cart counter and purchase tracking
+- 🎨 **Tailwind CSS Styling** – Clean, unified design system
+- 📱 **Fully Responsive** – Optimized for all devices
+- 🧱 **Component-Based** – Easily extensible UI architecture
 
-🧩 Modular structure for future expansion
+---
 
-📱 Fully responsive across devices
+## 🧭 Pages Overview
 
-Pages
-/ – Landing Page
+| Route         | Purpose                                |
+|---------------|----------------------------------------|
+| `/`           | Landing page with core value props     |
+| `/services`   | Overview of analytics and offerings    |
+| `/cart`       | View cart contents                     |
+| `/checkout`   | Stripe-powered payment processing      |
+| `/watch`      | Demo or walkthrough video experience   |
 
-/services – Overview of offered services
+---
 
-/cart – View and manage cart
+## 🛠 Getting Started
 
-/checkout – Stripe-powered payment processing
+### 1. Install dependencies
 
-/watch – Demo or walkthrough video page
-
-Getting Started (Development)
-Install dependencies:
-
-bash
-Copy
-Edit
+```bash
 npm install
-Start local dev server:
-
-bash
-Copy
-Edit
-npm run dev
-Then open http://localhost:3000 in your browser.
-
-File Structure Overview
-app/page.tsx – Home page content
-
-app/layout.tsx – Global layout (Header/Footer)
-
-components/ – Reusable UI components
-
-lib/ – Stripe integration and utility functions
-
-public/ – Static assets
-
-styles/ – Tailwind configuration and global styles
-
-Deployment
-This site is designed to deploy seamlessly on Vercel.
-
-To deploy:
-
-Push your changes to GitHub.
-
-Connect the repo to your Vercel dashboard.
-
-Set environment variables if needed (e.g., Stripe keys).
-
-Vercel will handle the rest.
-
-Technologies Used
-Next.js
-
-React
-
-Tailwind CSS
-
-Stripe
-
-TypeScript
-
-License
-This project is proprietary and maintained by Omnidata Solutions LLC. For partnership or usage inquiries, contact: contact@omnidata-solutions.com
