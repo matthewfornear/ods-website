@@ -13,11 +13,45 @@ export default function Contact() {
     company: "",
     message: ""
   });
+  const [status, setStatus] = useState<{
+    type: 'success' | 'error' | null;
+    message: string;
+  }>({ type: null, message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement form submission
-    console.log("Form submitted:", formData);
+    setIsSubmitting(true);
+    setStatus({ type: null, message: '' });
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || 'Something went wrong');
+      }
+
+      setStatus({
+        type: 'success',
+        message: 'Thank you for your message! We will get back to you soon.'
+      });
+      setFormData({ name: '', email: '', company: '', message: '' });
+    } catch (error) {
+      setStatus({
+        type: 'error',
+        message: error instanceof Error ? error.message : 'Failed to send message. Please try again.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -73,6 +107,13 @@ export default function Contact() {
             <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 shadow-xl">
               <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
               <form onSubmit={handleSubmit} className="space-y-6">
+                {status.type && (
+                  <div className={`p-4 rounded-lg ${
+                    status.type === 'success' ? 'bg-green-900/50 text-green-200' : 'bg-red-900/50 text-red-200'
+                  }`}>
+                    {status.message}
+                  </div>
+                )}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-2">Name</label>
                   <input
@@ -122,9 +163,14 @@ export default function Contact() {
                 </div>
                 <button
                   type="submit"
-                  className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium py-3 px-6 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
+                  disabled={isSubmitting}
+                  className={`w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 ${
+                    isSubmitting 
+                      ? 'opacity-50 cursor-not-allowed' 
+                      : 'hover:from-blue-600 hover:to-purple-700'
+                  }`}
                 >
-                  Send Message
+                  {isSubmitting ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </div>
@@ -140,6 +186,15 @@ export default function Contact() {
                       <h3 className="font-medium">Email</h3>
                       <a href="mailto:contact@omnidata-solutions.com" className="text-blue-400 hover:text-blue-300">
                         contact@omnidata-solutions.com
+                      </a>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-4">
+                    <div className="text-2xl">📞</div>
+                    <div>
+                      <h3 className="font-medium">Phone</h3>
+                      <a href="tel:5705794624" className="text-blue-400 hover:text-blue-300">
+                        (570) 579-4624
                       </a>
                     </div>
                   </div>
