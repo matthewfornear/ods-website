@@ -759,3 +759,7 @@ h1, .main-title {
 html {
   scroll-behavior: smooth;
 }
+
+html, body {
+  overflow-x: hidden;
+}

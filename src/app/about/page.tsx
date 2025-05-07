@@ -87,15 +87,15 @@ export default function About() {
                 <ul className="space-y-3 text-gray-300">
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We analyze Google Maps data to identify neighborhoods with high population density but low catering service presence, providing you with exact locations for expansion
+                    Analyze Google Maps data to identify neighborhoods with high population density but low catering service presence, providing exact locations for expansion.
                   </li>
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We compare your menu prices against 1,000+ local competitors, automatically adjusting your rates to maintain optimal profit margins while staying competitive
+                    Compare menu prices against 1,000+ local competitors, automatically adjusting rates to maintain optimal profit margins while staying competitive.
                   </li>
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We track customer reviews across platforms to identify peak service hours, automatically suggesting schedule adjustments to maximize customer satisfaction
+                    Track customer reviews across platforms to identify peak service hours, automatically suggesting schedule adjustments to maximize customer satisfaction.
                   </li>
                 </ul>
               </div>
@@ -105,15 +105,15 @@ export default function About() {
                 <ul className="space-y-3 text-gray-300">
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We monitor competitor inventory levels in real-time, alerting you when stock runs low so you can adjust your pricing strategy
+                    Monitor competitor inventory levels in real-time, alerting when stock runs low so you can adjust your pricing strategy.
                   </li>
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We analyze Amazon sales data to identify trending products 48 hours before they hit mainstream, giving you first-mover advantage
+                    Analyze Amazon sales data to identify trending products 48 hours before they hit mainstream, giving you first-mover advantage.
                   </li>
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We track customer search patterns to automatically optimize your product listings and marketing keywords for maximum visibility
+                    Track customer search patterns to automatically optimize product listings and marketing keywords for maximum visibility.
                   </li>
                 </ul>
               </div>
@@ -123,15 +123,15 @@ export default function About() {
                 <ul className="space-y-3 text-gray-300">
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We analyze review patterns to automatically adjust your service hours, extending availability during high-demand periods and reducing staff during slow times
+                    Analyze review patterns to automatically adjust service hours, extending availability during high-demand periods and reducing staff during slow times.
                   </li>
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We track competitor service offerings and pricing in real-time, automatically suggesting service package adjustments to maintain market competitiveness
+                    Track competitor service offerings and pricing in real-time, automatically suggesting service package adjustments to maintain market competitiveness.
                   </li>
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We monitor client feedback across platforms to identify service gaps, automatically generating improvement recommendations for your team
+                    Monitor client feedback across platforms to identify service gaps, automatically generating improvement recommendations for your team.
                   </li>
                 </ul>
               </div>
@@ -141,15 +141,15 @@ export default function About() {
                 <ul className="space-y-3 text-gray-300">
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We analyze patient feedback across platforms to automatically adjust appointment scheduling, reducing wait times during peak hours
+                    Analyze patient feedback across platforms to automatically adjust appointment scheduling, reducing wait times during peak hours.
                   </li>
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We identify underserved areas by analyzing population density against healthcare provider locations, providing exact coordinates for new facility placement
+                    Identify underserved areas by analyzing population density against healthcare provider locations, providing exact coordinates for new facility placement.
                   </li>
                   <li className="flex items-start">
                     <span className="text-white mr-2">•</span>
-                    We track competitor service offerings and pricing, automatically suggesting service adjustments to maintain optimal patient satisfaction and revenue
+                    Track competitor service offerings and pricing, automatically suggesting service adjustments to maintain optimal patient satisfaction and revenue.
                   </li>
                 </ul>
               </div>

@@ -92,7 +92,7 @@ export default function Contact() {
       <main className="main-container relative z-10 flex-grow pt-20 px-4 max-w-6xl mx-auto w-full">
         {/* Hero Section */}
         <section className="text-center mb-20 animate-on-scroll opacity-0">
-          <h1 className="text-5xl font-bold mb-6 bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold mb-6 text-white">
             Get in Touch
           </h1>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
@@ -206,7 +206,7 @@ export default function Contact() {
                         <a href="https://x.com/fixitorgotojail" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
                           Twitter
                         </a>
-                        <a href="https://github.com/tetzhu" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
+                        <a href="https://github.com/matthewfornear" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">
                           GitHub
                         </a>
                       </div>
