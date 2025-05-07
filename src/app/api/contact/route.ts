@@ -1,6 +1,11 @@
 import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
+// Debug: Log environment variables
+console.log('ZOHO_EMAIL:', process.env.ZOHO_EMAIL);
+console.log('ZOHO_PASSWORD:', process.env.ZOHO_PASSWORD ? 'set' : 'not set');
+console.log('CONTACT_FORM_RECIPIENT:', process.env.CONTACT_FORM_RECIPIENT);
+
 // Validate environment variables
 const requiredEnvVars = ['ZOHO_EMAIL', 'ZOHO_PASSWORD', 'CONTACT_FORM_RECIPIENT'];
 const missingEnvVars = requiredEnvVars.filter(varName => !process.env[varName]);
