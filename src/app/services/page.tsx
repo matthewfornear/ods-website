@@ -7,9 +7,11 @@ import { useCart } from "../context/CartContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import { useRouter } from "next/navigation";
+import { uniformServiceCards } from "./serviceData";
+import Modal from "../components/Modal";
 
 export default function Services() {
-  const { addToCart } = useCart();
+  const { addToCart, showModal, closeModal } = useCart();
   const router = useRouter();
   const [showMembership, setShowMembership] = useState(false);
   const [fadeInMembership, setFadeInMembership] = useState(false);
@@ -30,7 +32,7 @@ export default function Services() {
     addToCart({
       id: 2,
       name: "One-Time Business Optimization Consultation",
-      description: "A strategic, one-time consultation designed to restructure your business using targeted data insights. We analyze your current model, identify actionable improvements, and deliver a clear plan to boost profitability.",
+      description: "A strategic, one-time consultation designed to restructure your business using targeted data insights.",
       price: 100.00,
       period: "one-time",
       icon: "💡"
@@ -50,6 +52,12 @@ export default function Services() {
 
   return (
     <div className="relative min-h-screen flex flex-col bg-black text-white font-sans">
+      <Modal open={showModal} onClose={closeModal}>
+        <div className="text-lg font-semibold mb-2 text-center">You can only add one service to the cart at a time.</div>
+        <div className="flex justify-center mt-4">
+          <button className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700" onClick={closeModal}>Close</button>
+        </div>
+      </Modal>
       <Navbar />
       <main className="main-container relative z-10 flex-grow pt-20 px-4 max-w-6xl mx-auto w-full fade-up">
         <div className="text-center mb-16">
@@ -58,9 +66,84 @@ export default function Services() {
             Transform your business data into actionable insights with our comprehensive data integration solutions.
           </p>
         </div>
-        {/* Real-World Applications Card or Membership Card (toggle) */}
-        {!showMembership ? (
-          <div key="applications" className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 shadow-xl w-full mx-auto mb-8 animate-fade-in">
+        {/* Services Cards First */}
+        <>
+          {/* Membership and Consultation Cards Side-by-Side */}
+          {(() => {
+            // Reorder: Social Signal Tracker (id:3), Data Integration Membership (id:1), One-Time Business Optimization Consultation (id:2)
+            const order = [3, 1, 2];
+            const cards = uniformServiceCards;
+            return (
+              <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch w-full mt-8">
+                {cards.map((card) => {
+                  return (
+                    <div key={card.id} className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 shadow-xl max-w-lg w-full flex flex-col items-center text-center animate-fade-in" style={{ minHeight: '480px' }}>
+                      {/* Absolute badge at top center */}
+                      <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10">
+                        {card.badge && (
+                          <span className="bg-blue-900 text-blue-200 px-4 py-0.5 rounded-full text-xs font-semibold whitespace-nowrap inline-block">{card.badge}</span>
+                        )}
+                      </div>
+                      {/* Spacer to reserve badge space */}
+                      <div className="h-8"></div>
+                      <div className="flex flex-col items-center w-full mb-4">
+                        <div className="flex items-center justify-center w-full min-h-[56px] text-5xl">{card.icon}</div>
+                        <div className="flex items-center justify-center w-full min-h-[64px]">
+                          <h2 className="text-2xl font-bold text-center">{card.title}</h2>
+                        </div>
+                        <div className="flex items-center justify-center w-full min-h-[48px] mb-6">
+                          <p className="text-gray-400 text-center">{card.subtitle}</p>
+                        </div>
+                      </div>
+                      <ul className="space-y-3 mb-8">
+                        {card.features.map((feature: string, i: number) => (
+                          <li
+                            key={i}
+                            className="min-h-[32px] leading-snug text-left"
+                            style={feature ? {} : { visibility: 'hidden' }}
+                          >
+                            {feature}
+                          </li>
+                        ))}
+                        {card.examples.map((ex: string, i: number) => (
+                          <li key={i} className="flex items-center justify-center text-center pl-7" style={ex ? {} : {visibility: 'hidden'}}>
+                            <span className="italic text-blue-300">{ex}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex flex-col w-full mt-auto">
+                        <div className="text-3xl font-bold mb-6">{card.price}<span className="text-lg text-gray-400">{card.period}</span></div>
+                        <button
+                          onClick={() => {
+                            addToCart({
+                              id: card.id,
+                              name: card.title,
+                              description: card.subtitle,
+                              price: Number(card.price.replace(/[^\d.]/g, "")),
+                              period: card.period.replace("/", ""),
+                              icon: card.icon,
+                            });
+                          }}
+                          className={
+                            `block w-full font-medium py-3 px-6 rounded-lg text-center transition-all duration-300 mb-2 ` +
+                            (card.id === 3
+                              ? 'bg-slate-600 hover:bg-slate-700 text-white'
+                              : card.id === 1
+                                ? 'bg-blue-600 hover:bg-blue-700 text-white'
+                                : 'bg-yellow-400 hover:bg-yellow-500 text-black')
+                          }
+                        >
+                          {card.buttonText}
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })()}
+          {/* Always show Real-World Applications at the bottom */}
+          <div key="applications" className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 shadow-xl w-full mx-auto mt-8 animate-fade-in">
             <h2 className="text-3xl font-bold mb-8 text-center text-white">Real-World Applications</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-gray-800/50 rounded-xl p-6">
@@ -132,114 +215,8 @@ export default function Services() {
                 </ul>
               </div>
             </div>
-            <div className="flex justify-center mt-10">
-              <button
-                className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 text-lg"
-                onClick={() => setShowMembership(true)}
-              >
-                See Available Services
-              </button>
-            </div>
           </div>
-        ) : (
-          <>
-            {/* Membership and Consultation Cards Side-by-Side */}
-            {(() => {
-              const cards = [
-                {
-                  key: 'membership',
-                  icon: '📊',
-                  title: 'Data Integration Membership',
-                  subtitle: 'Get weekly business data updates and actionable insights delivered to your inbox.',
-                  features: [
-                    'Real-time data updates delivered weekly via email',
-                    'Data in structured formats (Excel, CSV, etc.)',
-                    'Immediate actionable insights',
-                  ],
-                  examples: [
-                    '"Your Monday promotions have the highest return of reviews: consider expanding this promotion to other days."',
-                    '"Competitor X increased their prices on Fridays: consider adjusting your pricing strategy."',
-                    '"Reviews indicate a lack of staff on Mondays."',
-                  ],
-                  price: '$29.99',
-                  period: '/month',
-                  button: {
-                    text: 'Add to Cart',
-                    onClick: handleAddToCart,
-                  },
-                },
-                {
-                  key: 'consultation',
-                  icon: '💡',
-                  title: 'One-Time Business Consultation',
-                  subtitle: 'A strategic, one-time consultation designed to restructure your business using targeted data insights.',
-                  features: [
-                    'In-depth analysis of your current business model',
-                    'Identification of actionable improvements',
-                    'Clear, step-by-step plan to boost profitability',
-                  ],
-                  examples: [
-                    '"Restructure your pricing tiers: competitors operate at 10% lower price points."',
-                    '"Streamline your onboarding process: 50% of customers do not complete their sign-up after the welcome email."',
-                    '"Shift ad spend: Google ads underperform, most customers convert via TikTok."',
-                  ],
-                  price: '$100.00',
-                  period: '/one-time',
-                  button: {
-                    text: 'Add to Cart',
-                    onClick: handleConsultationAddToCart,
-                  },
-                },
-              ];
-              return (
-                <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch w-full mt-8">
-                  {cards.map((card) => (
-                    <div key={card.key} className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 shadow-xl max-w-lg w-full flex flex-col items-center text-center animate-fade-in" style={{ minHeight: '700px' }}>
-                      <div className="flex flex-col items-center w-full mb-4">
-                        <div className="flex items-center justify-center w-full h-14 text-5xl">{card.icon}</div>
-                        <h2 className="text-2xl font-bold mb-4 flex items-center justify-center w-full">{card.title}</h2>
-                        <p className="text-gray-400 mb-6 min-h-[48px] flex items-center justify-center w-full">{card.subtitle}</p>
-                      </div>
-                      <ul className="space-y-3 mb-8">
-                        {card.features.map((feature, i) => (
-                          <li key={i} className="flex items-center">
-                            <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                            </svg>
-                            {feature}
-                          </li>
-                        ))}
-                        {card.examples.map((ex, i) => (
-                          <li key={i} className="flex items-center justify-center text-center pl-7">
-                            <span className="italic text-blue-300">{ex}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <div className="flex flex-col w-full mt-auto">
-                        <div className="text-3xl font-bold mb-6">{card.price}<span className="text-lg text-gray-400">{card.period}</span></div>
-                        <button
-                          onClick={card.button.onClick}
-                          className="block w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium py-3 px-6 rounded-lg text-center hover:from-blue-600 hover:to-purple-700 transition-all duration-300 mb-2"
-                        >
-                          {card.button.text}
-                        </button>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              );
-            })()}
-            {/* Centered Back Button Below Both Cards */}
-            <div className="flex justify-center mt-8">
-              <button
-                className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300"
-                onClick={() => setShowMembership(false)}
-              >
-                Back to Real-World Applications
-              </button>
-            </div>
-          </>
-        )}
+        </>
       </main>
       <Footer />
     </div>

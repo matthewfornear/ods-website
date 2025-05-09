@@ -16,6 +16,8 @@ interface CartContextType {
   isLoading: boolean;
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: number) => void;
+  showModal: boolean;
+  closeModal: () => void;
 }
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
@@ -38,6 +40,7 @@ const getInitialCart = (): CartItem[] => {
 export function CartProvider({ children }: { children: ReactNode }) {
   const [cartItems, setCartItems] = useState<CartItem[]>(getInitialCart);
   const [isLoading, setIsLoading] = useState(false);
+  const [showModal, setShowModal] = useState(false);
 
   // Save cart items to localStorage whenever they change
   useEffect(() => {
@@ -45,15 +48,23 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, [cartItems]);
 
   const addToCart = (item: CartItem) => {
-    setCartItems(prevItems => [...prevItems, item]);
+    setCartItems((prev) => {
+      if (prev.length > 0) {
+        setShowModal(true);
+        return prev;
+      }
+      return [...prev, item];
+    });
   };
 
   const removeFromCart = (id: number) => {
     setCartItems(prevItems => prevItems.filter(item => item.id !== id));
   };
 
+  const closeModal = () => setShowModal(false);
+
   return (
-    <CartContext.Provider value={{ cartItems, isLoading, addToCart, removeFromCart }}>
+    <CartContext.Provider value={{ cartItems, isLoading, addToCart, removeFromCart, showModal, closeModal }}>
       {children}
     </CartContext.Provider>
   );
