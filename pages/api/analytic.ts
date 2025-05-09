@@ -1,9 +1,21 @@
-import { NextResponse } from 'next/server';
-import clientPromise from '@/lib/mongodb';
+import type { NextApiRequest, NextApiResponse } from 'next';
+import clientPromise from '../../src/lib/mongodb';
 
-export async function POST(request: Request) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'OPTIONS') {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Max-Age', '86400');
+    return res.status(204).end();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
+  }
+
   try {
-    const data = await request.json();
+    const data = req.body;
     const client = await clientPromise;
     const db = client.db(process.env.MONGODB_DB);
     const collection = db.collection('tracking_events');
@@ -11,7 +23,7 @@ export async function POST(request: Request) {
     // Upsert by sessionId
     const { sessionId, type, ...rest } = data;
     if (!sessionId) {
-      return NextResponse.json({ error: 'Missing sessionId' }, { status: 400 });
+      return res.status(400).json({ error: 'Missing sessionId' });
     }
 
     if (type === 'pageview') {
@@ -38,22 +50,9 @@ export async function POST(request: Request) {
       );
     }
 
-    return NextResponse.json({ success: true }, { status: 200 });
+    return res.status(200).json({ success: true });
   } catch (error) {
     console.error('Error processing tracking data:', error);
-    return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+    return res.status(500).json({ error: 'Internal Server Error' });
   }
-}
-
-// Configure CORS
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 204,
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type',
-      'Access-Control-Max-Age': '86400',
-    },
-  });
 } 
