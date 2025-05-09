@@ -21,6 +21,27 @@ export default function Cart() {
 
   const total = cartItems.reduce((sum, item) => sum + item.price, 0);
 
+  // Stripe links
+  const membershipStripeLink = "https://buy.stripe.com/dR6aGU2Df5t6e0U5kk";
+  const consultationStripeLink = "https://buy.stripe.com/dR602g2Df2gU5uoaEF";
+
+  // Determine which Stripe link to use
+  let stripeLink = "";
+  let checkoutDisabled = false;
+  let checkoutMessage = "";
+  if (cartItems.length === 1) {
+    if (cartItems[0].id === 1) {
+      stripeLink = membershipStripeLink;
+    } else if (cartItems[0].id === 2) {
+      stripeLink = consultationStripeLink;
+    }
+  } else if (cartItems.length > 1) {
+    checkoutDisabled = true;
+    checkoutMessage = "Please checkout one service at a time.";
+  } else {
+    checkoutDisabled = true;
+  }
+
   return (
     <div className="relative min-h-screen flex flex-col bg-black text-white font-sans">
       <Navbar />
@@ -34,7 +55,7 @@ export default function Cart() {
               <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 text-center">
                 <div className="text-4xl mb-4">🛒</div>
                 <h2 className="text-2xl font-bold mb-4">Your cart is empty</h2>
-                <p className="text-gray-400 mb-6">Add some services to get started</p>
+                <p className="text-gray-400 mb-6">Add services to get started</p>
                 <Link 
                   href="/services" 
                   className="inline-block bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium py-3 px-6 rounded-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
@@ -87,18 +108,21 @@ export default function Cart() {
                   </label>
                 </div>
                 <a
-                  href="https://buy.stripe.com/dR6aGU2Df5t6e0U5kk"
+                  href={stripeLink || "#"}
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`w-full inline-block font-medium py-3 px-6 rounded-lg text-center text-xl shadow-lg mb-4 mt-6 transition-all duration-300
-                    ${cartItems.length === 0 || !agreedToEua
+                    ${cartItems.length === 0 || !agreedToEua || checkoutDisabled
                       ? 'bg-gray-700 text-gray-400 cursor-not-allowed pointer-events-none'
                       : 'bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700'}`}
-                  tabIndex={cartItems.length === 0 || !agreedToEua ? -1 : 0}
-                  aria-disabled={cartItems.length === 0 || !agreedToEua}
+                  tabIndex={cartItems.length === 0 || !agreedToEua || checkoutDisabled ? -1 : 0}
+                  aria-disabled={cartItems.length === 0 || !agreedToEua || checkoutDisabled}
                 >
                   Checkout with Stripe
                 </a>
+                {checkoutMessage && (
+                  <div className="text-red-400 text-sm mt-2">{checkoutMessage}</div>
+                )}
                 {cartItems.length > 0 && (
                   <div className="text-gray-400 text-sm mt-2">Taxes will be calculated at checkout.</div>
                 )}

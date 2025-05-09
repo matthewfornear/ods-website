@@ -6,21 +6,47 @@ import Image from "next/image";
 import { useCart } from "../context/CartContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
+import { useRouter } from "next/navigation";
 
 export default function Services() {
   const { addToCart } = useCart();
+  const router = useRouter();
   const [showMembership, setShowMembership] = useState(false);
+  const [fadeInMembership, setFadeInMembership] = useState(false);
 
   const handleAddToCart = () => {
     addToCart({
       id: 1,
       name: "Data Integration Membership",
-      description: "Access to our fully relational database of customer data",
+      description: "Get daily business data updates and actionable insights delivered to your inbox.",
       price: 29.99,
       period: "month",
       icon: "📊"
     });
+    router.push("/cart");
   };
+
+  const handleConsultationAddToCart = () => {
+    addToCart({
+      id: 2,
+      name: "One-Time Business Optimization Consultation",
+      description: "A strategic, one-time consultation designed to restructure your business using targeted data insights. We analyze your current model, identify actionable improvements, and deliver a clear plan to boost profitability.",
+      price: 100.00,
+      period: "one-time",
+      icon: "💡"
+    });
+    router.push("/cart");
+  };
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout;
+    if (showMembership) {
+      timeout = setTimeout(() => setFadeInMembership(true), 10); // allow DOM to mount first
+    } else {
+      setFadeInMembership(false);
+    }
+    return () => clearTimeout(timeout);
+  }, [showMembership]);
 
   return (
     <div className="relative min-h-screen flex flex-col bg-black text-white font-sans">
@@ -34,7 +60,7 @@ export default function Services() {
         </div>
         {/* Real-World Applications Card or Membership Card (toggle) */}
         {!showMembership ? (
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 shadow-xl w-full mx-auto mb-8 animate-fade-in">
+          <div key="applications" className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 shadow-xl w-full mx-auto mb-8 animate-fade-in">
             <h2 className="text-3xl font-bold mb-8 text-center text-white">Real-World Applications</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-gray-800/50 rounded-xl p-6">
@@ -111,58 +137,108 @@ export default function Services() {
                 className="bg-gradient-to-r from-blue-500 to-purple-600 text-white font-semibold py-3 px-8 rounded-lg shadow-lg hover:from-blue-600 hover:to-purple-700 transition-all duration-300 text-lg"
                 onClick={() => setShowMembership(true)}
               >
-                See Membership Details
+                See Available Services
               </button>
             </div>
           </div>
         ) : (
-          <div className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 shadow-xl max-w-lg mx-auto flex flex-col items-center justify-center text-center animate-fade-in">
-            <div className="text-4xl mb-4 flex items-center justify-center w-full">📊</div>
-            <h2 className="text-2xl font-bold mb-4 flex items-center justify-center w-full">Data Integration Membership</h2>
-            <p className="text-gray-400 mb-6">
-              Get access to our fully relational database of customer data, designed to help you make informed business decisions.
-            </p>
-            <ul className="space-y-3 mb-8">
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                Real-time data updates
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                Advanced analytics tools
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                Custom reporting
-              </li>
-              <li className="flex items-center">
-                <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                24/7 support
-              </li>
-            </ul>
-            <div className="text-3xl font-bold mb-6">$29.99<span className="text-lg text-gray-400">/month</span></div>
-            <Link 
-              href="/cart"
-              onClick={handleAddToCart}
-              className="block w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium py-3 px-6 rounded-lg text-center hover:from-blue-600 hover:to-purple-700 transition-all duration-300"
-            >
-              Add to Cart
-            </Link>
-            <button
-              className="mt-8 bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300"
-              onClick={() => setShowMembership(false)}
-            >
-              Back to Real-World Applications
-            </button>
-          </div>
+          <>
+            {/* Membership and Consultation Cards Side-by-Side */}
+            {(() => {
+              const cards = [
+                {
+                  key: 'membership',
+                  icon: '📊',
+                  title: 'Data Integration Membership',
+                  subtitle: 'Get weekly business data updates and actionable insights delivered to your inbox.',
+                  features: [
+                    'Real-time data updates delivered weekly via email',
+                    'Data in structured formats (Excel, CSV, etc.)',
+                    'Immediate actionable insights',
+                  ],
+                  examples: [
+                    '"Your Monday promotions have the highest return of reviews: consider expanding this promotion to other days."',
+                    '"Competitor X increased their prices on Fridays: consider adjusting your pricing strategy."',
+                    '"Reviews indicate a lack of staff on Mondays."',
+                  ],
+                  price: '$29.99',
+                  period: '/month',
+                  button: {
+                    text: 'Add to Cart',
+                    onClick: handleAddToCart,
+                  },
+                },
+                {
+                  key: 'consultation',
+                  icon: '💡',
+                  title: 'One-Time Business Consultation',
+                  subtitle: 'A strategic, one-time consultation designed to restructure your business using targeted data insights.',
+                  features: [
+                    'In-depth analysis of your current business model',
+                    'Identification of actionable improvements',
+                    'Clear, step-by-step plan to boost profitability',
+                  ],
+                  examples: [
+                    '"Restructure your pricing tiers: competitors operate at 10% lower price points."',
+                    '"Streamline your onboarding process: 50% of customers do not complete their sign-up after the welcome email."',
+                    '"Shift ad spend: Google ads underperform, most customers convert via TikTok."',
+                  ],
+                  price: '$100.00',
+                  period: '/one-time',
+                  button: {
+                    text: 'Add to Cart',
+                    onClick: handleConsultationAddToCart,
+                  },
+                },
+              ];
+              return (
+                <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch w-full mt-8">
+                  {cards.map((card) => (
+                    <div key={card.key} className="bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-8 shadow-xl max-w-lg w-full flex flex-col items-center text-center animate-fade-in" style={{ minHeight: '700px' }}>
+                      <div className="flex flex-col items-center w-full mb-4">
+                        <div className="flex items-center justify-center w-full h-14 text-5xl">{card.icon}</div>
+                        <h2 className="text-2xl font-bold mb-4 flex items-center justify-center w-full">{card.title}</h2>
+                        <p className="text-gray-400 mb-6 min-h-[48px] flex items-center justify-center w-full">{card.subtitle}</p>
+                      </div>
+                      <ul className="space-y-3 mb-8">
+                        {card.features.map((feature, i) => (
+                          <li key={i} className="flex items-center">
+                            <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            {feature}
+                          </li>
+                        ))}
+                        {card.examples.map((ex, i) => (
+                          <li key={i} className="flex items-center justify-center text-center pl-7">
+                            <span className="italic text-blue-300">{ex}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <div className="flex flex-col w-full mt-auto">
+                        <div className="text-3xl font-bold mb-6">{card.price}<span className="text-lg text-gray-400">{card.period}</span></div>
+                        <button
+                          onClick={card.button.onClick}
+                          className="block w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white font-medium py-3 px-6 rounded-lg text-center hover:from-blue-600 hover:to-purple-700 transition-all duration-300 mb-2"
+                        >
+                          {card.button.text}
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+            })()}
+            {/* Centered Back Button Below Both Cards */}
+            <div className="flex justify-center mt-8">
+              <button
+                className="bg-gray-700 hover:bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300"
+                onClick={() => setShowMembership(false)}
+              >
+                Back to Real-World Applications
+              </button>
+            </div>
+          </>
         )}
       </main>
       <Footer />
