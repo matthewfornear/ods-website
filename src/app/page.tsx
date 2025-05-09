@@ -75,7 +75,6 @@ export default function Home() {
               />
               <div className="platform-name">{p.name}</div>
               <div className="platform-stats">{p.stats}</div>
-              {!p.integrated && <div className="platform-badge">Coming Soon</div>}
             </div>
           ))}
         </div>
