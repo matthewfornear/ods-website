@@ -15,7 +15,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   try {
-    const data = req.body;
+    let data = req.body;
+    // Parse body if sent as a string
+    if (typeof data === 'string') {
+      try {
+        data = JSON.parse(data);
+      } catch (e) {
+        return res.status(400).json({ error: 'Invalid JSON' });
+      }
+    }
+    console.log('Received body:', data);
     const client = await clientPromise;
     const db = client.db(process.env.MONGODB_DB);
     const collection = db.collection('tracking_events');
