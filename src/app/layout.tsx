@@ -3,6 +3,18 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./context/CartContext";
 import { Analytics } from "@vercel/analytics/react";
+import TrackerInitializer from "./components/TrackerInitializer";
+import PageViewTracker from "./components/PageViewTracker";
+import { Suspense } from "react";
+
+declare global {
+  interface Window {
+    ODSTracker: {
+      init: (customerId?: string) => void;
+      trackEvent: (eventType: string, details?: Record<string, any>) => void;
+    };
+  }
+}
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -49,6 +61,10 @@ export default function RootLayout({
           {children}
         </CartProvider>
         <Analytics />
+        <Suspense>
+          <TrackerInitializer />
+          <PageViewTracker />
+        </Suspense>
       </body>
     </html>
   );
