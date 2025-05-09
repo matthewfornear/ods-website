@@ -12,9 +12,10 @@ import Footer from "./components/Footer";
 const platforms = [
   { name: "Google Maps", icon: "/svg/googlemaps.svg", stats: "200M+ places", integrated: true },
   { name: "X.com", icon: "/svg/xdotcom.svg", stats: "500M+ posts", integrated: true },
+  { name: "Reddit", icon: "/svg/reddit.svg", stats: "100M+ communities", integrated: true },
   { name: "Amazon", icon: "/svg/amazon.svg", stats: "1M+ products", integrated: false },
   { name: "Shopify", icon: "/svg/shopify.svg", stats: "2M+ shops", integrated: false },
-  { name: "Indeed", icon: "/svg/indeed.svg", stats: "10M+ jobs", integrated: false }
+  { name: "Indeed", icon: "/svg/indeed.svg", stats: "10M+ jobs", integrated: false },
 ];
 
 export default function Home() {
