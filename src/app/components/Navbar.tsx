@@ -29,7 +29,6 @@ export default function Navbar() {
       <div className="navbar-links">
         <Link href="/" className="navbar-link flex items-center justify-center h-12 px-4" aria-label="Home">Home</Link>
         <Link href="/about" className="navbar-link flex items-center justify-center h-12 px-4" aria-label="About">About</Link>
-        <Link href="/demo" className="navbar-link flex items-center justify-center h-12 px-4" aria-label="Demo">Demo</Link>
         <Link href="/services" className="navbar-link flex items-center justify-center h-12 px-4" aria-label="Services">Services</Link>
         <Link href="/contact" className="navbar-link flex items-center justify-center h-12 px-4" aria-label="Contact">Contact</Link>
         <Link href="/cart" className="navbar-link flex items-center justify-center h-12 px-4 relative pr-4 pt-2" aria-label="Cart">

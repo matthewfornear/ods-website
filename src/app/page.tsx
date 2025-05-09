@@ -78,9 +78,6 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <div className="cta-below-graph" style={{marginTop: '2.5rem'}}>
-          <Link href="/demo" className="button-primary">Watch Demo</Link>
-        </div>
       </main>
       <Footer />
       {/* SEO & Analytics (meta tags would go in _document or Head component) */}
