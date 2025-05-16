@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./context/CartContext";
 import { Analytics } from "@vercel/analytics/react";
-import TrackerInitializer from "./components/TrackerInitializer";
+// import TrackerInitializer from "./components/TrackerInitializer";
 import PageViewTracker from "./components/PageViewTracker";
 import { Suspense } from "react";
 
@@ -62,7 +62,6 @@ export default function RootLayout({
         </CartProvider>
         <Analytics />
         <Suspense>
-          <TrackerInitializer />
           <PageViewTracker />
         </Suspense>
       </body>
