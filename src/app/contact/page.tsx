@@ -190,15 +190,6 @@ export default function Contact() {
                     </div>
                   </div>
                   <div className="flex items-center space-x-4">
-                    <div className="text-2xl">📞</div>
-                    <div>
-                      <h3 className="font-medium">Phone</h3>
-                      <a href="tel:5705794624" className="text-blue-400 hover:text-blue-300">
-                        (570) 579-4624
-                      </a>
-                    </div>
-                  </div>
-                  <div className="flex items-center space-x-4">
                     <div className="text-2xl">🌐</div>
                     <div>
                       <h3 className="font-medium">Social Media</h3>
