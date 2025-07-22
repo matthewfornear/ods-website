@@ -13,42 +13,6 @@ import Modal from "../components/Modal";
 export default function Services() {
   const { addToCart, showModal, closeModal } = useCart();
   const router = useRouter();
-  const [showMembership, setShowMembership] = useState(false);
-  const [fadeInMembership, setFadeInMembership] = useState(false);
-
-  const handleAddToCart = () => {
-    addToCart({
-      id: 1,
-      name: "Data Integration Membership",
-      description: "Get daily business data updates and actionable insights delivered to your inbox.",
-      price: 29.99,
-      period: "month",
-      icon: "📊"
-    });
-    router.push("/cart");
-  };
-
-  const handleConsultationAddToCart = () => {
-    addToCart({
-      id: 2,
-      name: "One-Time Business Optimization Consultation",
-      description: "A strategic, one-time consultation designed to restructure your business using targeted data insights.",
-      price: 100.00,
-      period: "one-time",
-      icon: "💡"
-    });
-    router.push("/cart");
-  };
-
-  useEffect(() => {
-    let timeout: NodeJS.Timeout;
-    if (showMembership) {
-      timeout = setTimeout(() => setFadeInMembership(true), 10); // allow DOM to mount first
-    } else {
-      setFadeInMembership(false);
-    }
-    return () => clearTimeout(timeout);
-  }, [showMembership]);
 
   return (
     <div className="relative min-h-screen flex flex-col bg-black text-white font-sans">
@@ -66,15 +30,13 @@ export default function Services() {
             Transform your business data into actionable insights with our comprehensive data integration solutions.
           </p>
         </div>
-        {/* Services Cards First */}
+        {/* Services Cards */}
         <>
-          {/* Membership and Consultation Cards Side-by-Side */}
+          {/* Single Service Card Centered */}
           {(() => {
-            // Reorder: Social Signal Tracker (id:3), Data Integration Membership (id:1), One-Time Business Optimization Consultation (id:2)
-            const order = [3, 1, 2];
             const cards = uniformServiceCards;
             return (
-              <div className="flex flex-col lg:flex-row gap-8 justify-center items-stretch w-full mt-8">
+              <div className="flex justify-center items-stretch w-full mt-8">
                 {cards.map((card) => {
                   return (
                     <div key={card.id} className="relative bg-gradient-to-br from-gray-900 to-gray-800 rounded-2xl p-6 shadow-xl max-w-lg w-full flex flex-col items-center text-center animate-fade-in" style={{ minHeight: '480px' }}>
@@ -124,14 +86,7 @@ export default function Services() {
                               icon: card.icon,
                             });
                           }}
-                          className={
-                            `block w-full font-medium py-3 px-6 rounded-lg text-center transition-all duration-300 mb-2 ` +
-                            (card.id === 3
-                              ? 'bg-slate-600 hover:bg-slate-700 text-white'
-                              : card.id === 1
-                                ? 'bg-blue-600 hover:bg-blue-700 text-white'
-                                : 'bg-yellow-400 hover:bg-yellow-500 text-black')
-                          }
+                          className="block w-full font-medium py-3 px-6 rounded-lg text-center transition-all duration-300 mb-2 bg-yellow-400 hover:bg-yellow-500 text-black"
                         >
                           {card.buttonText}
                         </button>
